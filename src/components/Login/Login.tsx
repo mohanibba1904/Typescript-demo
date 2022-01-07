@@ -164,13 +164,6 @@ export default function Login() {
             
       
 
-                
-
-
-
-
-
-
 
 
 
@@ -192,6 +185,7 @@ export default function Login() {
            onChange={handleUsernameChange} onKeyPress={handleKeyPress}/>
           <input type="password" placeholder="Password" 
           onChange={handlePasswordChange}  onKeyPress={handleKeyPress}/>
+          <p>{state.helperText}</p>
           <button className="loginButton"
            onClick={handleLogin} disabled={state.isButtonDisabled}>Sign In</button>
           <span>
