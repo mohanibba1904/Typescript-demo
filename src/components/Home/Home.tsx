@@ -3,54 +3,78 @@ import Navbar from '../Navbar/Navbar'
 import MovieCard from '../MovieCard/MovieCard'
 import "./home.scss";
 import {
-    PlayArrow,
-    Add,
-    ThumbUpAltOutlined,
-    ThumbDownOutlined,
-  } from "@material-ui/icons";
+  HomeContainer,
+  HomeBarsContainer,
+  MainContainer,
+  BannerContainer,
+  BannerContentContainer,
+  BannerCloseButton,
+  BannerHeading,
+  BannerImage,
+  BannerButton,
+  VideosListHome,
+  FailureViewContainer,
+  FailureViewImage,
+  FailureHeading,
+  FailureText,
+  FailureRetryButton,
+  SearchForm,
+  SearchInput,
+  SearchButton,
+  NoVideosViewContainer,
+  NoVideosViewImage,
+  NoVideosHeading,
+  NoVideosText,
+  NoVideosViewRetryButton,
+} from './styledComponents'
 
 type State = {
   MovieList: any,
-  isError: string
+  apiStatus: boolean
 
 };
+
+// const apiConstants = {
+//   initial: 'INITIAL',
+//   success: 'SUCCESS',
+//   failure: 'FAILURE',
+//   inProgress: 'IN_PROGRESS',
+// }
+
 
 const initialState:State = {
   MovieList: [],
-  isError: ''
+  apiStatus: false
 };
 
+type Action = { type: 'moviesList', payload: any }
+| { type: 'setIsStatus', payload: boolean };
 
-export default function Home() {
+
  
-      type Action = { type: 'moviesList', payload: any }
-      | { type: 'setIsError', payload: string };
-      
-      const reducer = (state: State, action: Action): State => {
-        switch (action.type) {
-          case 'moviesList': 
-            return {
-              ...state,
-              MovieList: action.payload
-            };
-          case 'setIsError': 
-            return {
-              ...state,
-              isError: action.payload
-            };
-        }
-      }
-      
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'moviesList': 
+      return {
+        ...state,
+        MovieList: action.payload
+      };
+    case 'setIsStatus': 
+      return {
+        ...state,
+        apiStatus: action.payload
+      };
+  }
+}
+
+export default function Home() {  
 
     const [state, dispatch] = useReducer(reducer, initialState);
   
     useEffect(() => {        
         fetchMovieList()
     }, []);
-
-    
-
-        
+       
     async function fetchMovieList() {
         const searchParameter = ''
           const response = await window.fetch(`http://127.0.0.1:8000/movies?search=${searchParameter}`)
@@ -61,36 +85,90 @@ export default function Home() {
         //       })    
               if (response.ok) {
                 const responseData = await response.json()
-                console.log(responseData)
+                // console.log(responseData)
                 dispatch({
                     type: 'moviesList',
                     payload: responseData
                   });
+                  dispatch({
+                    type: 'setIsStatus',
+                    payload: true
+                  });
                 
               } else {
                 dispatch({
-                    type: 'setIsError',
-                    payload: 'Error'
+                    type: 'setIsStatus',
+                    payload: false
                   });
               }
               
           }
+          
+ const  videosList = () => {   
+    return (
+      <>
+        {state.MovieList.map((item: any) => (
+           <MovieCard key={item.id} {...item} />
+         ))}
+      </>
+    )
+  }
+
+    const renderFailureView = () => (  
+          
+                  <FailureViewContainer>
+                    <FailureViewImage src='https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png' alt="failure view" />
+                    <FailureHeading color='#ebebeb'>
+                      Oops! Something Went Wrong
+                    </FailureHeading>
+                    <FailureText color='#d7dfe9'>
+                      We are having some trouble to complete you request. Please try
+                      again.
+                    </FailureText>
+                    <FailureRetryButton
+                      type="button"
+                      // onClick={this.onClickFailureRetry}
+                    >
+                      Retry
+                    </FailureRetryButton>
+                  </FailureViewContainer>
+              
+          )
+              
+
+
+
+    
+  // const renderAllVideosList = () => {
+  //   console.log('success')
+  //   switch (state.apiStatus) {
+  //     case apiConstants.failure:
+  //       return {renderFailureView}
+  //     case apiConstants.success:
+  //       return {videosList}
+  //     default:
+  //       return null
+  //   }
+  // }
+      
 
 
     // Moviescard = () =>(
     //     return (
     //     <div>mohan</div>)
     // )
-
-    
+ 
   return (
-      
+     
     <div className="home">
-    <Navbar />
-    {state.MovieList.map((item: any) => (
+    <div className='movieslistcontainer'>
+    {/* {state.MovieList.map((item: any) => (
            <MovieCard {...item} />
-         ))}
-    
+         ))} */}
+      {state.apiStatus ? videosList() : renderFailureView()}
+
+
+    </div>
     </div>
   );
 }

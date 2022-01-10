@@ -1,6 +1,8 @@
 import React from 'react';
-import { isTemplateSpan } from 'typescript';
 import {BsDot} from 'react-icons/bs'
+import "./movieCard.scss";
+// import {Link} from 'react-router-dom'
+
 
 import {
     VideoListItem,
@@ -108,7 +110,7 @@ import {
   const MovieCard: React.FC<ChildComponentProps> = (props) => {
     const {title,name,id,profile_image_url,published_at,view_count,thumbnail_url} = props
     return (
-        < >
+        <div className="link-style" >
         <VideoListItem>
           <VideoListItemContainer>
             <VideoListItemThumbnailContainer>
@@ -144,7 +146,7 @@ import {
             </VideoListItemContentContainer>
           </VideoListItemContainer>
         </VideoListItem>
-      </>
+      </div>
     )
   }
   
