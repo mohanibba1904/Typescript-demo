@@ -1,5 +1,10 @@
 import React, { useReducer, useEffect } from 'react';
 import "./login.scss";
+import Cookies from 'js-cookie'
+import { useNavigate } from "react-router-dom";
+import {Navigate, useRoutes} from 'react-router-dom';
+
+// import { useHistory } from "react-router-dom";
 
 type State = {
   username: string
@@ -16,12 +21,14 @@ const initialState:State = {
   helperText: '',
   isError: false
 };
+interface ChildProps {
+  history : History
+  /* other props for ChildComponent */
+}
 
+// export default function Login() {
+const Login: React.FC<{}> = () => {
 
-
-export default function Login() {
-
- 
       type Action = { type: 'setUsername', payload: string }
         | { type: 'setPassword', payload: string }
         | { type: 'setIsButtonDisabled', payload: boolean }
@@ -105,6 +112,17 @@ export default function Login() {
       };
 
 
+    const onSuccessfulLogin = (jwtToken: string) => {
+      // let navigate = useNavigate();
+        Cookies.set('jwt_token', jwtToken, {
+          expires: 300,
+          path: '/',
+        })
+        // navigate('/');
+        // navigate('/path', { replace: true })
+
+      }
+
       
     
       const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -152,6 +170,7 @@ export default function Login() {
             type: 'loginSuccess',
             payload: 'Login Successfully'
           });
+          onSuccessfulLogin(responseData.access_token)
               
             } else {
             dispatch({
@@ -200,3 +219,6 @@ export default function Login() {
     </div>
   );
 }
+
+
+export default Login;

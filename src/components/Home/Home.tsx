@@ -69,6 +69,7 @@ const reducer = (state: State, action: Action): State => {
 
 export default function Home() {  
 
+
     const [state, dispatch] = useReducer(reducer, initialState);
   
     useEffect(() => {        
