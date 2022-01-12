@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar'
 import MovieCard from '../MovieCard/MovieCard'
+import { useNavigate } from "react-router-dom";
 import "./home.scss";
 import {
   HomeContainer,
@@ -72,11 +73,8 @@ export default function Home() {
 
     const [state, dispatch] = useReducer(reducer, initialState);
   
-    useEffect(() => {        
-        fetchMovieList()
-    }, []);
-       
-    async function fetchMovieList() {
+    useEffect(() => {   
+      async function fetchMovieList() {
         const searchParameter = ''
           const response = await window.fetch(`http://127.0.0.1:8000/movies?search=${searchParameter}`)
         //    {
@@ -104,6 +102,10 @@ export default function Home() {
               }
               
           }
+       
+        fetchMovieList()
+    }, []);
+       
           
  const  videosList = () => {   
     return (

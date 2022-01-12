@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
 
-import { decrement, increment } from './counterSlice'
+import { authentication } from './counterSlice'
+import Cookies from 'js-cookie'
 
 export default function Counter() {
   // The `state` arg is correctly typed as `RootState` already
-  const count = useAppSelector((state) => state.counter.value)
+  const count = useAppSelector((state) => state.counter.auth)
   const dispatch = useAppDispatch()
+  const authaccess = Cookies.get('jwt_token')
 
   // omit rendering logic
   return (
@@ -15,17 +17,12 @@ export default function Counter() {
       <div>
         <button
           aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+          onClick={() => dispatch(authentication())}
         >
           Increment
         </button>
         <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
+        
       </div>
     </div>
   )

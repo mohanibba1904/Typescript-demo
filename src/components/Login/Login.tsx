@@ -26,8 +26,10 @@ interface ChildProps {
   /* other props for ChildComponent */
 }
 
+
 // export default function Login() {
 const Login: React.FC<{}> = () => {
+  const navigate = useNavigate();
 
       type Action = { type: 'setUsername', payload: string }
         | { type: 'setPassword', payload: string }
@@ -57,13 +59,13 @@ const Login: React.FC<{}> = () => {
             return {
               ...state,
               helperText: action.payload,
-              isError: false
+              isError: true
             };
           case 'loginFailed': 
             return {
               ...state,
               helperText: action.payload,
-              isError: true
+              isError: false
             };
           case 'setIsError': 
             return {
@@ -89,13 +91,18 @@ const Login: React.FC<{}> = () => {
           payload: true
         });
       }
-     
+
+
+    
     
     }, [state.username, state.password]);
 
     const handleLogin = () => {
-      const status = fetchPokemon().then()  
-      console.log(status)
+      const status = fetchPokemon().then()
+      // if(state.isError){
+      //   let navigate = useNavigate();
+      //   navigate('/');
+      // }
         // if (state.username === 'abc@email.com' && state.password === 'password') {
         //   dispatch({
         //     type: 'loginSuccess',
@@ -113,11 +120,14 @@ const Login: React.FC<{}> = () => {
 
 
     const onSuccessfulLogin = (jwtToken: string) => {
-      // let navigate = useNavigate();
+      console.log(jwtToken)
         Cookies.set('jwt_token', jwtToken, {
-          expires: 300,
+          expires: 30,
           path: '/',
         })
+        return navigate('/');
+        
+        // <Navigate replace to='/'/>
         // navigate('/');
         // navigate('/path', { replace: true })
 
@@ -130,7 +140,7 @@ const Login: React.FC<{}> = () => {
           state.isButtonDisabled || handleLogin();
         }
       };
-    
+      
       const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
             console.log(event.target.value)
@@ -170,7 +180,12 @@ const Login: React.FC<{}> = () => {
             type: 'loginSuccess',
             payload: 'Login Successfully'
           });
+
           onSuccessfulLogin(responseData.access_token)
+         
+            // const navigate = useNavigate();
+            // navigate('/');
+          
               
             } else {
             dispatch({
