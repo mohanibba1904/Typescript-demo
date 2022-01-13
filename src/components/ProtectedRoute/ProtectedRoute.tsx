@@ -1,6 +1,7 @@
 import React, { useState,Fragment, useEffect } from 'react';
 import { Route, RouteProps} from 'react-router-dom';
 import { Navigate, Outlet } from 'react-router-dom';
+import { useLocation } from "react-router";
 import Cookies from 'js-cookie'
 import Home from '../Home/Home';
 import Login from '../Login/Login'
@@ -13,12 +14,13 @@ interface Props extends RouteProps{
 const ProtectedRoute = ({isAuth, ...routeProps}: Props): any => {
     // const [isAuth, setIsAuth] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     console.log(isAuth,"protected")
     if(isAuth){
-        return <Home/>;
+        return <Navigate to="/" replace state={{ from: location }} />;
 
     }  
-     return navigate('/login');;
+     return <Navigate to="/login" replace state={{ from: location }} />;
 
 
     // If authorized, return an outlet that will render child elements

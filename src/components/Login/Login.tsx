@@ -3,6 +3,8 @@ import "./login.scss";
 import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
 import {Navigate, useRoutes} from 'react-router-dom';
+import { useLocation } from "react-router";
+
 
 // import { useHistory } from "react-router-dom";
 
@@ -26,10 +28,17 @@ interface ChildProps {
   /* other props for ChildComponent */
 }
 
+interface EditPlaystProps {
+  history: History
+  match: any
+}
+
 
 // export default function Login() {
 const Login: React.FC<{}> = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
 
       type Action = { type: 'setUsername', payload: string }
         | { type: 'setPassword', payload: string }
@@ -125,7 +134,7 @@ const Login: React.FC<{}> = () => {
           expires: 30,
           path: '/',
         })
-        return navigate('/');
+        return <Navigate replace to='/'/>;
         
         // <Navigate replace to='/'/>
         // navigate('/');

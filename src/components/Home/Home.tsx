@@ -2,6 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar'
 import MovieCard from '../MovieCard/MovieCard'
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
+import { Navigate, Outlet } from 'react-router-dom';
 import "./home.scss";
 import {
   HomeContainer,
@@ -73,40 +75,42 @@ export default function Home() {
 
     const [state, dispatch] = useReducer(reducer, initialState);
   
-    useEffect(() => {   
-      async function fetchMovieList() {
-        const searchParameter = ''
-          const response = await window.fetch(`http://127.0.0.1:8000/movies?search=${searchParameter}`)
-        //    {
-        //       method: 'POST',
-        //       headers: {"Content-Type": "application/json"},
-        //       body: JSON.stringify(userDetails),
-        //       })    
-              if (response.ok) {
-                const responseData = await response.json()
-                // console.log(responseData)
-                dispatch({
-                    type: 'moviesList',
-                    payload: responseData
-                  });
-                  dispatch({
-                    type: 'setIsStatus',
-                    payload: true
-                  });
-                
-              } else {
-                dispatch({
-                    type: 'setIsStatus',
-                    payload: false
-                  });
-              }
-              
-          }
+    useEffect(() => {
        
         fetchMovieList()
     }, []);
        
-          
+   
+    async function fetchMovieList() {
+      const searchParameter = ''
+        const response = await window.fetch(`http://127.0.0.1:8000/movies?search=${searchParameter}`)
+      //    {
+      //       method: 'POST',
+      //       headers: {"Content-Type": "application/json"},
+      //       body: JSON.stringify(userDetails),
+      //       })    
+            if (response.ok) {
+              const responseData = await response.json()
+              // console.log(responseData)
+              dispatch({
+                  type: 'moviesList',
+                  payload: responseData
+                });
+                dispatch({
+                  type: 'setIsStatus',
+                  payload: true
+                });
+              
+            } else {
+              dispatch({
+                  type: 'setIsStatus',
+                  payload: false
+                });
+            }
+            
+        }
+
+
  const  videosList = () => {   
     return (
       <>
@@ -153,7 +157,10 @@ export default function Home() {
   //       return null
   //   }
   // }
-      
+  const auth = Cookies.get('jwt_token')
+  if(auth !== undefined){
+    return <Navigate to='/login'/>
+  }
 
 
     // Moviescard = () =>(
