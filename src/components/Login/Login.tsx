@@ -4,7 +4,8 @@ import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
 import {Navigate, useRoutes} from 'react-router-dom';
 import { useLocation } from "react-router";
-
+import Home from '../Home/Home'
+import { Satellite } from '@material-ui/icons';
 
 // import { useHistory } from "react-router-dom";
 
@@ -23,21 +24,21 @@ const initialState:State = {
   helperText: '',
   isError: false
 };
-interface ChildProps {
-  history : History
-  /* other props for ChildComponent */
-}
+// interface ChildProps {
+//   history : History
+//   /* other props for ChildComponent */
+// }
 
-interface EditPlaystProps {
-  history: History
-  match: any
-}
+// interface EditPlaystProps {
+//   history: History
+//   match: any
+// }
 
 
 // export default function Login() {
 const Login: React.FC<{}> = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
 
       type Action = { type: 'setUsername', payload: string }
@@ -68,13 +69,13 @@ const Login: React.FC<{}> = () => {
             return {
               ...state,
               helperText: action.payload,
-              isError: true
+              isError: false
             };
           case 'loginFailed': 
             return {
               ...state,
               helperText: action.payload,
-              isError: false
+              isError: true
             };
           case 'setIsError': 
             return {
@@ -88,7 +89,7 @@ const Login: React.FC<{}> = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
   
     useEffect(() => {
-        
+        console.log(state.username)
       if (state.username.trim() && state.password.trim()) {
        dispatch({
          type: 'setIsButtonDisabled',
@@ -100,42 +101,19 @@ const Login: React.FC<{}> = () => {
           payload: true
         });
       }
-
-
     
     
     }, [state.username, state.password]);
 
-    const handleLogin = () => {
-      const status = fetchPokemon().then()
-      // if(state.isError){
-      //   let navigate = useNavigate();
-      //   navigate('/');
-      // }
-        // if (state.username === 'abc@email.com' && state.password === 'password') {
-        //   dispatch({
-        //     type: 'loginSuccess',
-        //     payload: 'Login Successfully'
-        //   });
-       
-        // } else {
-        //   dispatch({
-        //     type: 'loginFailed',
-        //     payload: 'Incorrect username or password'
-        //   });
-         
-        // }
-      };
+
 
 
     const onSuccessfulLogin = (jwtToken: string) => {
       console.log(jwtToken)
         Cookies.set('jwt_token', jwtToken, {
           expires: 30,
-          path: '/',
-        })
-        return <Navigate replace to='/'/>;
-        
+          path: '/home',
+        })        
         // <Navigate replace to='/'/>
         // navigate('/');
         // navigate('/path', { replace: true })
@@ -170,9 +148,8 @@ const Login: React.FC<{}> = () => {
         }
 
 
-
     async function fetchPokemon() {
-      console.log('login')
+    
         const user_name = state.username
         const password = state.password
         const userDetails = {user_name, password}
@@ -189,7 +166,6 @@ const Login: React.FC<{}> = () => {
             type: 'loginSuccess',
             payload: 'Login Successfully'
           });
-
           onSuccessfulLogin(responseData.access_token)
          
             // const navigate = useNavigate();
@@ -205,7 +181,35 @@ const Login: React.FC<{}> = () => {
             
         }
             
-      
+
+
+
+
+    const handleLogin = () => {
+      fetchPokemon().then()
+      if(state.helperText==='Login Successfully'){
+        return <Navigate replace to ='/home'/>
+      }else{
+        return <Navigate to ='/login'/>
+      }
+      // if(state.isError){
+      //   let navigate = useNavigate();
+      //   navigate('/');
+      // }
+        // if (state.username === 'abc@email.com' && state.password === 'password') {
+        //   dispatch({
+        //     type: 'loginSuccess',
+        //     payload: 'Login Successfully'
+        //   });
+       
+        // } else {
+        //   dispatch({
+        //     type: 'loginFailed',
+        //     payload: 'Incorrect username or password'
+        //   });
+         
+        // }
+      };
 
 
 

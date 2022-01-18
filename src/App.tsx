@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Cookies from 'js-cookie'
 import { useAppSelector, useAppDispatch } from './hooks'
 import { authentication } from './components/Counter/counterSlice'
+import {Navigate, useRoutes} from 'react-router-dom';
+import MovieItemDetails from './components/MovieItemDetails/MovieItemDetails';
 
 
 
@@ -26,21 +28,24 @@ const App: React.FC = () => {
   const count = useAppSelector((state) => state.counter.auth)
   const dispatch = useAppDispatch()
 
-  console.log(count)
+ 
 
   const auth = Cookies.get('jwt_token')
   if (auth !== undefined) {
     dispatch(authentication())
   }
-  console.log(auth)
+
+
   return (
     <Router>
       <Fragment>
         <Routes>
+        <Route path='/' element={<Navigate replace to='/login' />} />
           <Route path='/login'
             element={<Login />}
           />
-          <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='home/movie/:id' element={<MovieItemDetails />} />
 
           {/* <Route  path='/' element={<Home/>} /> */}
 

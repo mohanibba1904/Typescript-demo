@@ -158,7 +158,7 @@ export default function Home() {
   //   }
   // }
   const auth = Cookies.get('jwt_token')
-  if(auth !== undefined){
+  if(auth === undefined){
     return <Navigate to='/login'/>
   }
 

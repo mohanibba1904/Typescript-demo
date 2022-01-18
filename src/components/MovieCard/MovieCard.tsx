@@ -1,5 +1,6 @@
 import React from 'react';
 import {BsDot} from 'react-icons/bs'
+import {Link} from 'react-router-dom'
 import "./movieCard.scss";
 // import {Link} from 'react-router-dom'
 
@@ -35,7 +36,7 @@ import {
   const MovieCard: React.FC<ChildComponentProps> = (props) => {
     const {title,name,id,profile_image_url,published_at,view_count,thumbnail_url} = props
     return (
-        <div className="link-style" >
+        <Link className="link-style" to={`movie/${id}`}>
         <VideoListItem>
           <VideoListItemContainer>
             <VideoListItemThumbnailContainer>
@@ -71,7 +72,7 @@ import {
             </VideoListItemContentContainer>
           </VideoListItemContainer>
         </VideoListItem>
-      </div>
+      </Link>
     )
   }
   

@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import ReactPlayer from 'react-player'
+import {useParams} from 'react-router-dom';
 
 import {
     VideoItemDetailsContainer,
@@ -35,8 +36,22 @@ type State = {
     MovieItem: ''
   };
 // export default function Login() {
-const MovieItemDetails = () => {   
-    
+
+
+
+  interface MatchParams {
+    id: string
+  }
+  
+  // interface Props extends RouteComponentProps<MatchParams> {
+  //  // ...
+  // }
+
+
+const MovieItemDetails: React.FC = (): JSX.Element => {
+  const params = useParams();
+  const {id} = params
+  console.log('failure',id)
     type Action = { type: 'movieList', payload: any }
   
   const reducer = (state: State, action: Action): State => {
@@ -51,7 +66,6 @@ const MovieItemDetails = () => {
   
 
 const [state, dispatch] = useReducer(reducer, initialState);
-
             
         useEffect(() => {
             getMovieIdDetails()
@@ -60,17 +74,14 @@ const [state, dispatch] = useReducer(reducer, initialState);
                  
           async function getMovieIdDetails() {
   
-            const id = 1
               const response = await window.fetch(`http://127.0.0.1:8000/movies/movieid/${id}`, {
                   method: 'GET',
                   headers: {"Content-Type": "application/json"},
                   })    
-                  const responseData = await response.json()
-                  console.log(responseData)
+                  const videoDetailsData = await response.json()
                 if (response.ok) {              
                   // const navigate = useNavigate();
                   // navigate('/');
-                  const videoDetailsData = await response.json()
                   console.log(videoDetailsData)
                   const formattedVideoDetailsData = {
                     
@@ -90,6 +101,11 @@ const [state, dispatch] = useReducer(reducer, initialState);
                 
                     
                   } 
+
+                  dispatch({
+                    type: 'movieList',
+                    payload: formattedVideoDetailsData
+                  });
                 }else {
                  
                 console.log('error')
@@ -110,25 +126,12 @@ const [state, dispatch] = useReducer(reducer, initialState);
                 <VideoItemDetailsText
                
                 >{`${state.MovieItem.viewCount} views`}</VideoItemDetailsText>
-                <BsDot size="22"  />
                 <VideoItemDetailsText >
-                  {publishedTimeAgo}
+                  {state.MovieItem.publishedTimeAgo}
                 </VideoItemDetailsText>
               </ParametersAndLikesInnerContainer>
               <ParametersAndLikesInnerContainer>
-                <VideoItemDetailsSmallButton
-                  type="button"
-                >
-                  <AiOutlineLike />
-                  Like
-                </VideoItemDetailsSmallButton>
-                <VideoItemDetailsSmallButton
-                  type="button"
-                  
-                >
-                  <AiOutlineDislike />
-                  Dislike
-                </VideoItemDetailsSmallButton>
+               
                 <VideoItemDetailsSmallButton
                   type="button"
                 
