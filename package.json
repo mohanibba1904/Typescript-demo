@@ -23,6 +23,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "3.4.1",
+    "react-scripts-build-as-dist": "^3.4.1",
     "redux-thunk": "^2.4.1",
     "saas": "^1.0.0",
     "sass": "^1.45.2",
