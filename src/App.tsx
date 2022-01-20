@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from './hooks'
 import { authentication } from './components/Counter/counterSlice'
 import {Navigate, useRoutes} from 'react-router-dom';
 import MovieItemDetails from './components/MovieItemDetails/MovieItemDetails';
+import { createBrowserHistory } from "history";
 
 
 
@@ -26,6 +27,7 @@ const App: React.FC = () => {
 
   // const [isAuth, setIsAuth] = useState(false);
   const count = useAppSelector((state) => state.counter.auth)
+
   const dispatch = useAppDispatch()
 
  
@@ -40,7 +42,7 @@ const App: React.FC = () => {
     <Router>
       <Fragment>
         <Routes>
-        <Route path='/' element={<Navigate replace to='/login' />} />
+        <Route path='/' element={<Navigate replace to='/home' />} />
           <Route path='/login'
             element={<Login />}
           />
