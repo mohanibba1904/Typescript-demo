@@ -40,13 +40,13 @@ export const FailureViewImage = styled.img`
 
 export const FailureHeading = styled.h1`
   margin: 10px;
-  color: black;
+  color: #ffffff;
   text-align: center;
 `
 
 export const FailureText = styled.p`
   margin: 5px;
-  color: black;
+  color: white;
   font-size: 20px;
   text-align: center;
   width: 80%;
@@ -73,11 +73,12 @@ export const VideoItemContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: black;
-  padding: 20px 0px 20px 0px;
+  // padding: 20px 0px 20px 0px;
+  padding-top: 10%;
 `
 
 export const VideoItemDescription = styled.p`
-  color: black;
+  color: white;
   width: 90%;
   margin: 10px 20px 0px 16px;
   align-self: flex-start;
@@ -117,7 +118,7 @@ export const VideoItemDetailsText = styled.p`
   font-size: 12px;
   font-family: 'Roboto';
   font-weight: bold;
-  color: black;
+  color: white;
   @media screen and (min-width: 768px) {
     font-size: 16px;
     margin: 10px 0px 10px 0px;
@@ -134,7 +135,7 @@ export const VideoItemDetailsSmallButton = styled.button`
   padding: 0px;
   margin: 10px 0px 10px 0px;
   font-weight: 600;
-  color: black;
+  color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -147,7 +148,7 @@ export const VideoItemDetailsSmallButton = styled.button`
 export const VideoItemLine = styled.hr`
   width: 90%;
   height: 2px;
-  color: black;
+  color: white;
 `
 
 export const VideoItemProfileContainer = styled.div`
@@ -177,8 +178,8 @@ export const VideoProfileChannelName = styled.p`
   font-size: 14px;
   margin: 3px;
   font-weight: 600;
-  color: black;
-  @media screen and (min-width: 768px) {
+  color: white;
+    @media screen and (min-width: 768px) {
     font-size: 18px;
   }
 `
@@ -207,7 +208,7 @@ export const VideoProfileDescriptionSmallText = styled.p`
   margin: 5px;
   font-size: 18px;
   font-size: 14px;
-  color: black;
+  color: white;
   @media screen and (min-width: 768px) {
     display: none;
   }

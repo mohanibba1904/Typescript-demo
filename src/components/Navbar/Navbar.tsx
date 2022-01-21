@@ -1,10 +1,20 @@
 import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
 import { useState } from "react";
 import React from "react";
+import {Link} from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import Cookies from 'js-cookie'
 import "./navbar.scss";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
+ const removeJwtToken = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const history = createBrowserHistory(); 
+    Cookies.remove('jwt_token')
+    history.replace('/login')
+    history.go(0)
+  }
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -18,11 +28,8 @@ const Navbar = () => {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-          <span>Homepage</span>
-          <span>Series</span>
-          <span>Movies</span>
-          <span>New and Popular</span>
-          <span>My List</span>
+          <Link to='/home'><span>Home</span></Link>
+
         </div>
         <div className="right">
           <Search className="icon" />
@@ -36,7 +43,7 @@ const Navbar = () => {
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Settings</span>
-              <span>Logout</span>
+              <button type='button' onClick={removeJwtToken}>Logout</button>
             </div>
           </div>
         </div>

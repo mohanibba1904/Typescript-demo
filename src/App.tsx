@@ -11,6 +11,7 @@ import { authentication } from './components/Counter/counterSlice'
 import {Navigate, useRoutes} from 'react-router-dom';
 import MovieItemDetails from './components/MovieItemDetails/MovieItemDetails';
 import { createBrowserHistory } from "history";
+import Navbar from './components/Navbar/Navbar';
 
 
 
@@ -40,6 +41,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <Navbar/>
       <Fragment>
         <Routes>
         <Route path='/' element={<Navigate replace to='/home' />} />
